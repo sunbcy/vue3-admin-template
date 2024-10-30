@@ -1,9 +1,12 @@
-from fastapi import FastAPI
+import warnings
 
-app = FastAPI()
+from app import create_app
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+# 设置警告过滤器，忽略所有警告
+warnings.simplefilter("ignore")
+app = create_app()
 
-# 更多路由和业务逻辑可以添加在这里
+
+@app.route("/")
+def index():
+    return app.send_static_file('index.html')
